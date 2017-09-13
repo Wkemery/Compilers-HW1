@@ -1,0 +1,85 @@
+%{
+    #include"program1.h" 
+    using namespace std;
+    Lexeme token;
+    int column = 1;
+    int line = 1;
+%}
+%option outfile="program1_lex.cpp"
+%option noyywrap
+%%
+(" ")+ {
+  
+    setToken(yytext, line, column);
+    column+= token.value.length();
+    
+    return SPACE; 
+}
+(\t)+ {
+    
+    setToken(yytext, line, column);
+    column+= token.value.length()*8;
+    return TAB;
+}
+[.,?;”’\(\)\[\]] {
+    
+    setToken(yytext, line, column);
+    column+= token.value.length();
+    
+    return PUNCTUATION;
+}
+[+ − ∗/% =˜] {
+    
+    setToken(yytext, line, column);
+    column+= token.value.length();
+    
+    return OPERATOR; 
+}
+[0-9]+ {
+    
+    setToken(yytext, line, column);
+    column+= token.value.length();
+    
+    return INT; 
+}
+[0-9]+\.[0-9]+ {
+    
+    setToken(yytext, line, column);
+    column+= token.value.length();
+    
+    return FLOAT; 
+}
+[0-9]+((\.[0-9]+))?(e|E)(\+|-)?[0-9]+ {
+    
+    setToken(yytext, line, column);
+    column+= token.value.length();
+    
+    return SCI; 
+}
+([a-zA-Z]|_)([a-zA-Z]|[0-9]|_)* {
+    
+    setToken(yytext, line, column);
+    column+= token.value.length();
+    
+    return WORD; 
+}
+
+\n {
+    
+    setToken(yytext, line, column);    
+    column = 1;
+    line++;
+    
+    return NEWLINE; 
+}
+. {
+    
+    setToken(yytext, line, column);
+    column+= token.value.length();
+    
+    return ERR; 
+}
+
+
+%%
+

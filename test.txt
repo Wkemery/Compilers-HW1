@@ -1,0 +1,4 @@
+128 55.62 9e+08 42E01 1e17 42.7e-09 2.3E-45 _hello95j6_54_end_
+	testing punctuation.? Now some other symbols * * * \\
+this is a sentence
+		55.5 + 62.111253 % 0.00125 - .2568 **
